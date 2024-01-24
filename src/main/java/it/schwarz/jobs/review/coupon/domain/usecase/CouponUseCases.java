@@ -1,9 +1,6 @@
 package it.schwarz.jobs.review.coupon.domain.usecase;
 
-import it.schwarz.jobs.review.coupon.domain.entity.AmountOfMoney;
-import it.schwarz.jobs.review.coupon.domain.entity.Basket;
-import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
+import it.schwarz.jobs.review.coupon.domain.entity.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,16 +14,28 @@ public class CouponUseCases {
     }
 
     public Coupon createCoupon(Coupon coupon) {
-        Coupon persistedCoupon = couponProvider.createCoupon(coupon);
-        return persistedCoupon;
+        try {
+            return couponProvider.createCoupon(coupon);
+        } catch (IllegalStateException ex) {
+            throw new CouponAlreadyExistsException(ex.getMessage());
+        }
     }
 
-    public List<Coupon> findAll() {
+    public List<Coupon> findAllCoupons() {
         return couponProvider.findAll();
     }
 
-    public Basket applyCoupon(AmountOfMoney basketValue, String couponCode) {
+    public CouponApplication getApplications(String couponCode) {
+        var foundCoupon = couponProvider.getCouponApplications(couponCode);
+        if (foundCoupon.isEmpty()) {
+            throw new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found.");
+        }
+        return foundCoupon.get();
+    }
 
+    public ApplicationResult applyCoupon(Basket basket, String couponCode) {
+
+        AmountOfMoney basketValue = basket.getValue();
         Optional<Coupon> foundCoupon = couponProvider.findById(couponCode);
 
         // No Coupon not found for Coupon Code
@@ -51,7 +60,7 @@ public class CouponUseCases {
         couponProvider.registerApplication(couponToApply.getCode());
 
         // Apply
-        return new Basket(basketValue, couponToApply.getDiscount(), true);
+        return new ApplicationResult(basket, couponToApply);
     }
 
 }

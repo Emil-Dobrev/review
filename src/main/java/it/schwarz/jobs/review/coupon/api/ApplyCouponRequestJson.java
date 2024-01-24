@@ -1,13 +1,15 @@
 package it.schwarz.jobs.review.coupon.api;
 
-import jakarta.validation.constraints.Min;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-
-import java.math.BigDecimal;
+import jakarta.validation.constraints.Size;
 
 public record ApplyCouponRequestJson(
-    @Min(0)
-    BigDecimal basketValue,
-    @NotBlank
-    String couponCode) {
+        @Valid
+        BasketJson basket,
+
+        @NotBlank
+        @Size(min = 1, max = 20)
+        String couponCode
+) {
 }

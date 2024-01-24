@@ -1,12 +1,12 @@
-package it.schwarz.jobs.review.coupon.domain;
+package it.schwarz.jobs.review.coupon.domain.entity;
 
-import it.schwarz.jobs.review.coupon.domain.entity.AmountOfMoney;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class AmountOfMoneyTest {
+class AmountOfMoneyTests {
 
     @Test
     void testZero() {

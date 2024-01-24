@@ -1,8 +1,8 @@
 package it.schwarz.jobs.review.coupon.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.schwarz.jobs.review.coupon.TestObjects;
 import it.schwarz.jobs.review.coupon.domain.usecase.CouponUseCases;
+import it.schwarz.jobs.review.coupon.testobjects.TestObjects;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-class CouponRestControllerTest {
+class CouponRestControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -37,7 +37,7 @@ class CouponRestControllerTest {
 
     @Test
     void testGetCoupons() throws Exception {
-        when(couponUseCases.findAll()).thenReturn(new ArrayList<>());
+        when(couponUseCases.findAllCoupons()).thenReturn(new ArrayList<>());
 
         this.mockMvc
                 .perform(get("/api/coupons"))
@@ -59,7 +59,7 @@ class CouponRestControllerTest {
                         .characterEncoding(StandardCharsets.UTF_8)
                 )
                 .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn();
     }
 

@@ -1,4 +1,4 @@
-package it.schwarz.jobs.review.coupon;
+package it.schwarz.jobs.review.coupon.testobjects;
 
 public class TestObjects {
 
@@ -10,10 +10,14 @@ public class TestObjects {
 
     public static TestCoupons coupons() {
         return testCoupons;
-    };
+    }
+
+    ;
 
 
     public static TestRequests requests() {
         return testRequests;
-    };
+    }
+
+    ;
 }

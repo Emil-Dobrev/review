@@ -15,21 +15,21 @@ public class CouponApplicationConfig {
     @Bean
     public CouponProvider getJpaCouponProvider(
             CouponJpaRepository couponJpaRepository,
-            ApplicationRepository applicationRepository
-    ) {
+            ApplicationRepository applicationRepository) {
         return new JpaCouponProvider(couponJpaRepository, applicationRepository);
     }
+
+    // Comment in/out one of the CouponProvider Beans to select one for runtime
+    // @Bean
+    public CouponProvider getInMemCouponProvider() {
+        return new InMemoryCouponProvider();
+    }
+
 
     @Bean
     public CouponUseCases getCouponUseCases(CouponProvider couponProvider) {
         return new CouponUseCases(couponProvider);
     }
-
-
-//    @Bean
-//    public CouponProvider getInMemCouponProvider() {
-//        return new InMemoryCouponProvider();
-//    }
 
 
 }

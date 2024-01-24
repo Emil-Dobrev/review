@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name="APPLICATION")
+@Table(name = "APPLICATION")
 public class ApplicationJpaEntity {
 
     @Id

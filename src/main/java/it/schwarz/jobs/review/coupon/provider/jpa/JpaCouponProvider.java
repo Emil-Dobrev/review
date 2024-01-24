@@ -2,9 +2,9 @@ package it.schwarz.jobs.review.coupon.provider.jpa;
 
 import it.schwarz.jobs.review.coupon.domain.entity.AmountOfMoney;
 import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
+import it.schwarz.jobs.review.coupon.domain.entity.CouponApplication;
 import it.schwarz.jobs.review.coupon.domain.usecase.CouponProvider;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.time.Instant;
 import java.util.List;
@@ -24,6 +24,9 @@ public class JpaCouponProvider implements CouponProvider {
     @Override
     @Transactional
     public Coupon createCoupon(Coupon coupon) {
+        if (couponJpaRepository.existsById(coupon.getCode())) {
+            throw new IllegalStateException("Coupon already exists: " + coupon.getCode());
+        }
         CouponJpaEntity toPersist = domainToJpa(coupon);
         CouponJpaEntity persisted = couponJpaRepository.save(toPersist);
         return jpaToDomain(persisted);
@@ -39,8 +42,8 @@ public class JpaCouponProvider implements CouponProvider {
     @Override
     public void registerApplication(String couponCode) {
         applicationRepository.save(new ApplicationJpaEntity(
-                        couponCode,
-                        Instant.now()));
+                couponCode,
+                Instant.now()));
     }
 
     @Override
@@ -49,12 +52,27 @@ public class JpaCouponProvider implements CouponProvider {
         return found.map(this::jpaToDomain);
     }
 
+    @Override
+    public Optional<CouponApplication> getCouponApplications(String couponCode) {
+        Optional<CouponJpaEntity> found = couponJpaRepository.findById(couponCode);
+        if (found.isPresent()) {
+            return Optional.of(new CouponApplication(
+                    found.get().getCode(),
+                    found.get().getApplications().stream()
+                            .map(applicationJpaEntity -> applicationJpaEntity.getTimestamp())
+                            .toList()));
+        }
+        return Optional.empty();
+
+    }
+
     private CouponJpaEntity domainToJpa(Coupon coupon) {
         return new CouponJpaEntity(
                 coupon.getCode(),
                 coupon.getDiscount().toBigDecimal(),
+                coupon.getDescription(),
                 coupon.getMinBasketValue().toBigDecimal()
-                );
+        );
     }
 
     private Coupon jpaToDomain(CouponJpaEntity couponJpaEntity) {
@@ -63,6 +81,7 @@ public class JpaCouponProvider implements CouponProvider {
                 couponJpaEntity.getCode(),
                 AmountOfMoney.of(couponJpaEntity.getDiscount()),
                 AmountOfMoney.of(couponJpaEntity.getMinBasketValue()),
+                couponJpaEntity.getDescription(),
                 couponJpaEntity.getApplications() == null ? 0 : couponJpaEntity.getApplications().size()
         );
     }
