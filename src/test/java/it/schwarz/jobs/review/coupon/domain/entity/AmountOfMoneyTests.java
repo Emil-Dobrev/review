@@ -10,7 +10,7 @@ class AmountOfMoneyTests {
 
     @Test
     void testZero() {
-        assertThat(AmountOfMoney.ZERO().toBigDecimal()).isZero();
+        assertThat(AmountOfMoney.ZERO.toBigDecimal()).isZero();
     }
 
     @Test
@@ -21,23 +21,19 @@ class AmountOfMoneyTests {
         assertTrue(amount.isGreaterThan(AmountOfMoney.of("1.00")));
         assertTrue(amount.isGreaterThan(AmountOfMoney.of("0")));
         assertTrue(amount.isGreaterThan(AmountOfMoney.of("-1.23")));
-
         assertFalse(amount.isGreaterThan(AmountOfMoney.of("1.23")));
-
         assertFalse(amount.isGreaterThan(AmountOfMoney.of("1.3")));
     }
 
     @Test
-    void testIsLesserThan() {
+    void testIsLessThan() {
         var amount = AmountOfMoney.of("1.23");
 
         assertFalse(amount.isLessThan(AmountOfMoney.of("1.22")));
         assertFalse(amount.isLessThan(AmountOfMoney.of("1.00")));
         assertFalse(amount.isLessThan(AmountOfMoney.of("0")));
         assertFalse(amount.isLessThan(AmountOfMoney.of("-1.23")));
-
         assertFalse(amount.isLessThan(AmountOfMoney.of("1.23")));
-
         assertTrue(amount.isLessThan(AmountOfMoney.of("1.3")));
     }
 }

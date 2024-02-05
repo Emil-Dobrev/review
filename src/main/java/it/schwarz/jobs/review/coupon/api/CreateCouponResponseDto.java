@@ -2,11 +2,11 @@ package it.schwarz.jobs.review.coupon.api;
 
 import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
 
-public record CreateCouponResponseJson(CouponJson coupon) {
+public record CreateCouponResponseDto(CouponDto coupon) {
 
-    public static CreateCouponResponseJson of(Coupon coupon) {
-        return new CreateCouponResponseJson(
-                new CouponJson(
+    public static CreateCouponResponseDto of(Coupon coupon) {
+        return new CreateCouponResponseDto(
+                new CouponDto(
                         coupon.getCode(),
                         coupon.getDiscount().toBigDecimal(),
                         coupon.getMinBasketValue().toBigDecimal(),

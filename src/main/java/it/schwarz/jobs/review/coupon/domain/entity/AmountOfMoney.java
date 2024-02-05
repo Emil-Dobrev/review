@@ -3,6 +3,7 @@ package it.schwarz.jobs.review.coupon.domain.entity;
 import java.math.BigDecimal;
 
 public class AmountOfMoney {
+    public static AmountOfMoney ZERO = new AmountOfMoney(BigDecimal.ZERO);
     private final BigDecimal amount;
 
     private AmountOfMoney(BigDecimal amount) {
@@ -15,10 +16,6 @@ public class AmountOfMoney {
 
     public static AmountOfMoney of(BigDecimal amountAsBigDecimal) {
         return new AmountOfMoney(amountAsBigDecimal);
-    }
-
-    public static AmountOfMoney ZERO() {
-        return new AmountOfMoney(BigDecimal.ZERO);
     }
 
     public boolean isGreaterThan(AmountOfMoney otherAmount) {

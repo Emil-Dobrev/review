@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles(profiles = "dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class CouponApplicationIT {
+public class CouponAppIT {
 
     @LocalServerPort
     private int port;
@@ -34,8 +34,8 @@ public class CouponApplicationIT {
     @Order(1)
     public void testGetCouponOverview() throws Exception {
 
-        GetCouponsResponseJson response = this.restTemplate
-                .getForObject("http://localhost:" + port + "/api/coupons", GetCouponsResponseJson.class);
+        GetCouponsResponseDto response = this.restTemplate
+                .getForObject("http://localhost:" + port + "/api/coupons", GetCouponsResponseDto.class);
 
         assertThat(response.coupons()).hasSize(3);
     }
@@ -44,15 +44,15 @@ public class CouponApplicationIT {
     @Order(2)
     public void testCreateCoupon() throws Exception {
 
-        CreateCouponRequestJson request = TestObjects.requests().validCoupon();
-        CreateCouponResponseJson response = this.restTemplate
-                .postForObject("http://localhost:" + port + "/api/coupons", request, CreateCouponResponseJson.class);
+        CreateCouponRequestDto request = TestObjects.requests().validCoupon();
+        CreateCouponResponseDto response = this.restTemplate
+                .postForObject("http://localhost:" + port + "/api/coupons", request, CreateCouponResponseDto.class);
 
         assertThat(response.coupon()).isNotNull();
         assertThat(response.coupon().code()).isEqualTo(TestObjects.requests().validCoupon().code());
 
-        GetCouponsResponseJson overviewResponse = this.restTemplate
-                .getForObject("http://localhost:" + port + "/api/coupons", GetCouponsResponseJson.class);
+        GetCouponsResponseDto overviewResponse = this.restTemplate
+                .getForObject("http://localhost:" + port + "/api/coupons", GetCouponsResponseDto.class);
 
         assertThat(overviewResponse.coupons()).hasSize(4);
     }
@@ -62,7 +62,7 @@ public class CouponApplicationIT {
     @Order(3)
     public void testCreateCouponDuplicate() throws Exception {
 
-        CreateCouponRequestJson request = TestObjects.requests().validCoupon();
+        CreateCouponRequestDto request = TestObjects.requests().validCoupon();
         ResponseEntity<ErrorResponseJson> response = this.restTemplate
                 .postForEntity("http://localhost:" + port + "/api/coupons", request, ErrorResponseJson.class);
 
@@ -72,19 +72,19 @@ public class CouponApplicationIT {
     }
 
     @Test
-    public void testApplicationWithValidData() throws Exception {
+    public void testCouponApplicationWithValidData() throws Exception {
 
-        ApplyCouponRequestJson request = TestObjects.requests().validApplication();
-        ResponseEntity<ApplyCouponResponseJson> response = this.restTemplate
-                .postForEntity("http://localhost:" + port + "/api/coupons/applications", request, ApplyCouponResponseJson.class);
+        ApplyCouponRequestDto request = TestObjects.requests().validApplication();
+        ResponseEntity<ApplyCouponResponseDto> response = this.restTemplate
+                .postForEntity("http://localhost:" + port + "/api/coupons/applications", request, ApplyCouponResponseDto.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().appliedDiscount()).isGreaterThan(BigDecimal.ZERO);
     }
 
     @Test
-    public void testApplicationWithInvalidData() throws Exception {
-        ApplyCouponRequestJson request = TestObjects.requests().invalidApplicationOfNotExistingCode();
+    public void testCouponApplicationWithInvalidData() throws Exception {
+        ApplyCouponRequestDto request = TestObjects.requests().invalidApplicationOfNotExistingCode();
         ResponseEntity<String> response = this.restTemplate
                 .postForEntity("http://localhost:" + port + "/api/coupons/applications", request, String.class);
 
@@ -96,8 +96,8 @@ public class CouponApplicationIT {
 
     @Test
     public void testGetCouponApplicationsWithValidCoupon() throws Exception {
-        ResponseEntity<GetCouponApplicationsResponseJson> response = this.restTemplate
-                .getForEntity("http://localhost:" + port + "/api/coupons/TEST_05_50/applications", GetCouponApplicationsResponseJson.class);
+        ResponseEntity<GetCouponApplicationsResponseDto> response = this.restTemplate
+                .getForEntity("http://localhost:" + port + "/api/coupons/TEST_05_50/applications", GetCouponApplicationsResponseDto.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody().couponCode()).isEqualTo("TEST_05_50");
@@ -107,8 +107,8 @@ public class CouponApplicationIT {
     @Test
     public void testGetCouponApplicationsWithInvalidCoupon() throws Exception {
         String notExistingCouponCode = TestObjects.coupons().NOT_EXISTING_COUPON().getCode();
-        ResponseEntity<GetCouponApplicationsResponseJson> response = this.restTemplate
-                .getForEntity("http://localhost:" + port + "/api/coupons/" + notExistingCouponCode + "/applications", GetCouponApplicationsResponseJson.class);
+        ResponseEntity<GetCouponApplicationsResponseDto> response = this.restTemplate
+                .getForEntity("http://localhost:" + port + "/api/coupons/" + notExistingCouponCode + "/applications", GetCouponApplicationsResponseDto.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
     }

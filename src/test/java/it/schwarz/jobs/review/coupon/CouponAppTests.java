@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles(profiles = "dev")
-class CouponApplicationTests {
+class CouponAppTests {
 
     @Test
     void contextLoads() {

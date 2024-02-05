@@ -2,7 +2,7 @@ package it.schwarz.jobs.review.coupon.provider.jpa;
 
 import it.schwarz.jobs.review.coupon.domain.entity.AmountOfMoney;
 import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
-import it.schwarz.jobs.review.coupon.domain.entity.CouponApplication;
+import it.schwarz.jobs.review.coupon.domain.entity.CouponApplications;
 import it.schwarz.jobs.review.coupon.domain.usecase.CouponProvider;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +27,8 @@ public class JpaCouponProvider implements CouponProvider {
         if (couponJpaRepository.existsById(coupon.getCode())) {
             throw new IllegalStateException("Coupon already exists: " + coupon.getCode());
         }
-        CouponJpaEntity toPersist = domainToJpa(coupon);
-        CouponJpaEntity persisted = couponJpaRepository.save(toPersist);
+        var toPersist = domainToJpa(coupon);
+        var persisted = couponJpaRepository.save(toPersist);
         return jpaToDomain(persisted);
     }
 
@@ -40,7 +40,7 @@ public class JpaCouponProvider implements CouponProvider {
     }
 
     @Override
-    public void registerApplication(String couponCode) {
+    public void registerCouponApplication(String couponCode) {
         applicationRepository.save(new ApplicationJpaEntity(
                 couponCode,
                 Instant.now()));
@@ -48,15 +48,15 @@ public class JpaCouponProvider implements CouponProvider {
 
     @Override
     public Optional<Coupon> findById(String couponCode) {
-        Optional<CouponJpaEntity> found = couponJpaRepository.findById(couponCode);
+        var found = couponJpaRepository.findById(couponCode);
         return found.map(this::jpaToDomain);
     }
 
     @Override
-    public Optional<CouponApplication> getCouponApplications(String couponCode) {
-        Optional<CouponJpaEntity> found = couponJpaRepository.findById(couponCode);
+    public Optional<CouponApplications> getCouponApplications(String couponCode) {
+        var found = couponJpaRepository.findById(couponCode);
         if (found.isPresent()) {
-            return Optional.of(new CouponApplication(
+            return Optional.of(new CouponApplications(
                     found.get().getCode(),
                     found.get().getApplications().stream()
                             .map(applicationJpaEntity -> applicationJpaEntity.getTimestamp())

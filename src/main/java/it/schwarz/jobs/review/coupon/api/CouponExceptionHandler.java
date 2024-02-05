@@ -15,8 +15,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CouponExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {BusinessException.class})
-    protected ResponseEntity<Object> handleBusinessException(BusinessException ex, WebRequest request) {
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<Object> handleBusinessExceptions(BusinessException ex, WebRequest request) {
+        final var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setDetail(ex.getMessage());
 
         return handleExceptionInternal(ex, problemDetail,
@@ -24,8 +24,8 @@ public class CouponExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {Exception.class})
-    protected ResponseEntity<Object> handleBusinessException(Exception ex, WebRequest request) {
-        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+    protected ResponseEntity<Object> handleAllOtherExceptions(Exception ex, WebRequest request) {
+        final var problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         problemDetail.setDetail(ex.getMessage());
 
         return handleExceptionInternal(ex, problemDetail,

@@ -1,26 +1,26 @@
 package it.schwarz.jobs.review.coupon.testobjects;
 
-import it.schwarz.jobs.review.coupon.api.ApplyCouponRequestJson;
-import it.schwarz.jobs.review.coupon.api.BasketJson;
-import it.schwarz.jobs.review.coupon.api.CreateCouponRequestJson;
+import it.schwarz.jobs.review.coupon.api.ApplyCouponRequestDto;
+import it.schwarz.jobs.review.coupon.api.BasketDto;
+import it.schwarz.jobs.review.coupon.api.CreateCouponRequestDto;
 
 import java.math.BigDecimal;
 
 public class TestRequests {
 
-    public CreateCouponRequestJson validCoupon() {
-        return new CreateCouponRequestJson("CODE_12_20", new BigDecimal("12.00"), new BigDecimal("20.00"), "12 for 20");
+    public CreateCouponRequestDto validCoupon() {
+        return new CreateCouponRequestDto("CODE_12_20", new BigDecimal("12.00"), new BigDecimal("20.00"), "12 for 20");
     }
 
-    public CreateCouponRequestJson invalidCouponOfNegativeDiscount() {
-        return new CreateCouponRequestJson("CODE_12_20", new BigDecimal("-12.00"), new BigDecimal("20.00"), "12 for 20");
+    public CreateCouponRequestDto invalidCouponOfNegativeDiscount() {
+        return new CreateCouponRequestDto("CODE_12_20", new BigDecimal("-12.00"), new BigDecimal("20.00"), "12 for 20");
     }
 
-    public ApplyCouponRequestJson validApplication() {
-        return new ApplyCouponRequestJson(new BasketJson(new BigDecimal("60.00")), "TEST_05_50");
+    public ApplyCouponRequestDto validApplication() {
+        return new ApplyCouponRequestDto(new BasketDto(new BigDecimal("60.00")), "TEST_05_50");
     }
 
-    public ApplyCouponRequestJson invalidApplicationOfNotExistingCode() {
-        return new ApplyCouponRequestJson(new BasketJson(new BigDecimal("60.00")), "<NOT-EXISTING-CODE>");
+    public ApplyCouponRequestDto invalidApplicationOfNotExistingCode() {
+        return new ApplyCouponRequestDto(new BasketDto(new BigDecimal("60.00")), "<NOT-EXISTING-CODE>");
     }
 }

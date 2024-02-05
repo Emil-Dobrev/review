@@ -1,8 +1,8 @@
 package it.schwarz.jobs.review.coupon.domain.entity;
 
 public class ApplicationResult {
-    private Basket basket;
-    private Coupon appliedCoupon;
+    private final Basket basket;
+    private final Coupon appliedCoupon;
 
     public ApplicationResult(Basket basket, Coupon appliedCoupon) {
         this.basket = basket;

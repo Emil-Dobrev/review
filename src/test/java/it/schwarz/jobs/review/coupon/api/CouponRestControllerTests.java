@@ -49,7 +49,7 @@ class CouponRestControllerTests {
     @Test
     void testCreateValidCoupon() throws Exception {
 
-        CreateCouponRequestJson request = TestObjects.requests().validCoupon();
+        CreateCouponRequestDto request = TestObjects.requests().validCoupon();
         when(couponUseCases.createCoupon(any())).thenReturn(TestObjects.coupons().COUPON_12_20());
 
         this.mockMvc
@@ -66,7 +66,7 @@ class CouponRestControllerTests {
     @Test
     void testCreateInvalidCoupon() throws Exception {
 
-        CreateCouponRequestJson request = TestObjects.requests().invalidCouponOfNegativeDiscount();
+        CreateCouponRequestDto request = TestObjects.requests().invalidCouponOfNegativeDiscount();
 
         this.mockMvc
                 .perform(post("/api/coupons")

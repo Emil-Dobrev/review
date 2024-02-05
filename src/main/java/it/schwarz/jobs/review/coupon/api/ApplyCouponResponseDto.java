@@ -4,13 +4,13 @@ import it.schwarz.jobs.review.coupon.domain.entity.ApplicationResult;
 
 import java.math.BigDecimal;
 
-public record ApplyCouponResponseJson(
+public record ApplyCouponResponseDto(
 
-        BasketJson basket,
+        BasketDto basket,
         BigDecimal appliedDiscount) {
 
-    public static ApplyCouponResponseJson of(ApplicationResult applicationResult) {
-        return new ApplyCouponResponseJson(new BasketJson(
+    public static ApplyCouponResponseDto of(ApplicationResult applicationResult) {
+        return new ApplyCouponResponseDto(new BasketDto(
                 applicationResult.getBasket().getValue().toBigDecimal()),
                 applicationResult.getAppliedCoupon().getDiscount().toBigDecimal()
         );

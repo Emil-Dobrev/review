@@ -1,7 +1,7 @@
 package it.schwarz.jobs.review.coupon.domain.usecase;
 
 import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
-import it.schwarz.jobs.review.coupon.domain.entity.CouponApplication;
+import it.schwarz.jobs.review.coupon.domain.entity.CouponApplications;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +13,7 @@ public interface CouponProvider {
 
     Optional<Coupon> findById(String couponCode);
 
-    void registerApplication(String couponCode);
+    void registerCouponApplication(String couponCode);
 
-    Optional<CouponApplication> getCouponApplications(String couponCode);
+    Optional<CouponApplications> getCouponApplications(String couponCode);
 }

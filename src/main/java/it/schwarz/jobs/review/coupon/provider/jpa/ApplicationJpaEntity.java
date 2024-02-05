@@ -14,10 +14,10 @@ public class ApplicationJpaEntity {
     @Column(name = "ID")
     private long id;
 
-    @Column(name = "COUPON_CODE")
-    private String code;
+    @Column(name = "COUPON_CODE", nullable = false)
+    private String couponCode;
 
-    @Column(name = "TIMESTAMP")
+    @Column(name = "TIMESTAMP", nullable = false)
     private Instant timestamp;
 
 
@@ -25,7 +25,7 @@ public class ApplicationJpaEntity {
     }
 
     public ApplicationJpaEntity(String code, Instant timestamp) {
-        this.code = code;
+        this.couponCode = code;
         this.timestamp = timestamp;
     }
 
@@ -33,8 +33,8 @@ public class ApplicationJpaEntity {
         return id;
     }
 
-    public String getCode() {
-        return code;
+    public String getCouponCode() {
+        return couponCode;
     }
 
     public Instant getTimestamp() {

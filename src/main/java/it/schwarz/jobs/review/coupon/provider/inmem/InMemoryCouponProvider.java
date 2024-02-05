@@ -2,16 +2,20 @@ package it.schwarz.jobs.review.coupon.provider.inmem;
 
 import it.schwarz.jobs.review.coupon.domain.entity.AmountOfMoney;
 import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
-import it.schwarz.jobs.review.coupon.domain.entity.CouponApplication;
+import it.schwarz.jobs.review.coupon.domain.entity.CouponApplications;
 import it.schwarz.jobs.review.coupon.domain.usecase.CouponProvider;
 
 import java.time.Instant;
 import java.util.*;
 
+/**
+ * InMemory Implementation to simplify local test and development.
+ * You can use this if there is no real database available.
+ */
 public class InMemoryCouponProvider implements CouponProvider {
 
     private final Set<Coupon> coupons = new HashSet<>();
-    private final Set<CouponApplication> couponApplications = new HashSet<>();
+    private final Set<CouponApplications> couponApplications = new HashSet<>();
 
     public InMemoryCouponProvider() {
         // Test Coupons
@@ -21,13 +25,13 @@ public class InMemoryCouponProvider implements CouponProvider {
 
 
         // Test DateTimes
-        List<Instant> applicationDateTimes = new ArrayList<>();
+        var applicationDateTimes = new ArrayList<Instant>();
         applicationDateTimes.add(Instant.now().plusSeconds(1));
         applicationDateTimes.add(Instant.now().plusSeconds(2));
         applicationDateTimes.add(Instant.now().plusSeconds(3));
         applicationDateTimes.add(Instant.now().plusSeconds(4));
         couponApplications.add(
-                new CouponApplication("TEST_05_50", applicationDateTimes)
+                new CouponApplications("TEST_05_50", applicationDateTimes)
         );
     }
 
@@ -35,8 +39,8 @@ public class InMemoryCouponProvider implements CouponProvider {
     @Override
     public Coupon createCoupon(Coupon coupon) {
         // Coupon must not already exist
-        var foundCounpon = this.findById(coupon.getCode());
-        if (foundCounpon.isPresent()) {
+        var foundCoupon = this.findById(coupon.getCode());
+        if (foundCoupon.isPresent()) {
             throw new IllegalStateException("Coupon already exists: " + coupon.getCode());
         }
 
@@ -57,12 +61,12 @@ public class InMemoryCouponProvider implements CouponProvider {
     }
 
     @Override
-    public void registerApplication(String couponCode) {
-        // Intentionally left blank
+    public void registerCouponApplication(String couponCode) {
+        // Intentionally left blank, because it is currently not used
     }
 
     @Override
-    public Optional<CouponApplication> getCouponApplications(String couponCode) {
+    public Optional<CouponApplications> getCouponApplications(String couponCode) {
         return couponApplications.stream()
                 .filter(it -> it.getCouponCode().equals(couponCode))
                 .findFirst();

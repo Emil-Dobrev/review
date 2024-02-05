@@ -1,9 +1,11 @@
 package it.schwarz.jobs.review.coupon.domain.usecase;
 
-import it.schwarz.jobs.review.coupon.domain.entity.*;
+import it.schwarz.jobs.review.coupon.domain.entity.ApplicationResult;
+import it.schwarz.jobs.review.coupon.domain.entity.Basket;
+import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
+import it.schwarz.jobs.review.coupon.domain.entity.CouponApplications;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CouponUseCases {
 
@@ -25,7 +27,7 @@ public class CouponUseCases {
         return couponProvider.findAll();
     }
 
-    public CouponApplication getApplications(String couponCode) {
+    public CouponApplications getApplications(String couponCode) {
         var foundCoupon = couponProvider.getCouponApplications(couponCode);
         if (foundCoupon.isEmpty()) {
             throw new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found.");
@@ -35,16 +37,16 @@ public class CouponUseCases {
 
     public ApplicationResult applyCoupon(Basket basket, String couponCode) {
 
-        AmountOfMoney basketValue = basket.getValue();
-        Optional<Coupon> foundCoupon = couponProvider.findById(couponCode);
+        var basketValue = basket.getValue();
+        var foundCoupon = couponProvider.findById(couponCode);
 
-        // No Coupon not found for Coupon Code
+        // No Coupon found for given Coupon Code
         if (foundCoupon.isEmpty()) {
             throw new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found.");
         }
 
         // Basket value must not be less than discount
-        Coupon couponToApply = foundCoupon.get();
+        var couponToApply = foundCoupon.get();
         if (basketValue.isLessThan(couponToApply.getDiscount())) {
             throw new BasketValueTooLowException(
                     "The basket value (" + basketValue.toBigDecimal() + ") must not be less than the discount (" + couponToApply.getDiscount().toBigDecimal() + ").");
@@ -57,7 +59,7 @@ public class CouponUseCases {
         }
 
         // Register the usage of this coupon
-        couponProvider.registerApplication(couponToApply.getCode());
+        couponProvider.registerCouponApplication(couponToApply.getCode());
 
         // Apply
         return new ApplicationResult(basket, couponToApply);

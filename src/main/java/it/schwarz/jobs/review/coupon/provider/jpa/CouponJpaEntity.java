@@ -11,15 +11,15 @@ import java.util.List;
 public class CouponJpaEntity {
 
     @Id
-    @Column(name = "CODE")
+    @Column(name = "CODE", nullable = false)
     private String code;
-    @Column(name = "DISCOUNT", precision = 10, scale = 2)
+    @Column(name = "DISCOUNT", nullable = false, precision = 10, scale = 2)
     private BigDecimal discount;
-    @Column(name = "MIN_BASKET_VALUE", precision = 10, scale = 2)
+    @Column(name = "MIN_BASKET_VALUE", nullable = false, precision = 10, scale = 2)
     private BigDecimal minBasketValue;
-    @Column(name = "DESCRIPTION", length = 1000)
+    @Column(name = "DESCRIPTION", nullable = false, length = 1000)
     private String description;
-    @OneToMany(mappedBy = "code")
+    @OneToMany(mappedBy = "couponCode")
     private List<ApplicationJpaEntity> applications;
 
     public CouponJpaEntity() {

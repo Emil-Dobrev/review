@@ -4,12 +4,12 @@ import it.schwarz.jobs.review.coupon.domain.entity.Coupon;
 
 import java.util.List;
 
-public record GetCouponsResponseJson(List<CouponJson> coupons) {
+public record GetCouponsResponseDto(List<CouponDto> coupons) {
 
-    public static GetCouponsResponseJson of(List<Coupon> coupons) {
-        return new GetCouponsResponseJson(
+    public static GetCouponsResponseDto of(List<Coupon> coupons) {
+        return new GetCouponsResponseDto(
                 coupons.stream()
-                        .map(coupon -> new CouponJson(
+                        .map(coupon -> new CouponDto(
                                 coupon.getCode(),
                                 coupon.getDiscount().toBigDecimal(),
                                 coupon.getMinBasketValue().toBigDecimal(),
