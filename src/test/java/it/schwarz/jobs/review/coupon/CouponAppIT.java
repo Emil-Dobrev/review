@@ -1,6 +1,7 @@
 package it.schwarz.jobs.review.coupon;
 
 import it.schwarz.jobs.review.coupon.api.*;
+import it.schwarz.jobs.review.coupon.api.dto.*;
 import it.schwarz.jobs.review.coupon.testobjects.TestObjects;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;

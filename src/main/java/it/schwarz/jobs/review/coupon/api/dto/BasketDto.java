@@ -1,4 +1,4 @@
-package it.schwarz.jobs.review.coupon.api;
+package it.schwarz.jobs.review.coupon.api.dto;
 
 import it.schwarz.jobs.review.coupon.domain.entity.AmountOfMoney;
 import it.schwarz.jobs.review.coupon.domain.entity.Basket;

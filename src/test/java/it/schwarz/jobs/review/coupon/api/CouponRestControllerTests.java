@@ -1,6 +1,7 @@
 package it.schwarz.jobs.review.coupon.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import it.schwarz.jobs.review.coupon.api.dto.CreateCouponRequestDto;
 import it.schwarz.jobs.review.coupon.domain.usecase.CouponUseCases;
 import it.schwarz.jobs.review.coupon.testobjects.TestObjects;
 import org.junit.jupiter.api.Test;

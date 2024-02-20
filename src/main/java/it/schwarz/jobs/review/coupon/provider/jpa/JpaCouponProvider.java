@@ -55,15 +55,11 @@ public class JpaCouponProvider implements CouponProvider {
     @Override
     public Optional<CouponApplications> getCouponApplications(String couponCode) {
         var found = couponJpaRepository.findById(couponCode);
-        if (found.isPresent()) {
-            return Optional.of(new CouponApplications(
-                    found.get().getCode(),
-                    found.get().getApplications().stream()
-                            .map(applicationJpaEntity -> applicationJpaEntity.getTimestamp())
-                            .toList()));
-        }
-        return Optional.empty();
-
+        return found.map(couponJpaEntity -> new CouponApplications(
+                couponJpaEntity.getCode(),
+                couponJpaEntity.getApplications().stream()
+                        .map(ApplicationJpaEntity::getTimestamp)
+                        .toList()));
     }
 
     private CouponJpaEntity domainToJpa(Coupon coupon) {

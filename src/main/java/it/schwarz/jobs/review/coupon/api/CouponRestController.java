@@ -1,5 +1,6 @@
 package it.schwarz.jobs.review.coupon.api;
 
+import it.schwarz.jobs.review.coupon.api.dto.*;
 import it.schwarz.jobs.review.coupon.domain.usecase.CouponUseCases;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

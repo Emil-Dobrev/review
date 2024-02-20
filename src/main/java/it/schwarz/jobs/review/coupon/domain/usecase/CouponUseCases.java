@@ -28,11 +28,11 @@ public class CouponUseCases {
     }
 
     public CouponApplications getApplications(String couponCode) {
-        var foundCoupon = couponProvider.getCouponApplications(couponCode);
-        if (foundCoupon.isEmpty()) {
+        var foundCouponApplications = couponProvider.getCouponApplications(couponCode);
+        if (foundCouponApplications.isEmpty()) {
             throw new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found.");
         }
-        return foundCoupon.get();
+        return foundCouponApplications.get();
     }
 
     public ApplicationResult applyCoupon(Basket basket, String couponCode) {

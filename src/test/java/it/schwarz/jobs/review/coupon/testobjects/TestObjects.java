@@ -12,12 +12,8 @@ public class TestObjects {
         return testCoupons;
     }
 
-    ;
-
-
     public static TestRequests requests() {
         return testRequests;
     }
 
-    ;
 }
