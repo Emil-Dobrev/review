@@ -24,9 +24,7 @@ class CouponUseCasesTests {
         assertThat(createdCoupon).isNotNull();
 
         // Duplicate
-        Exception exception = assertThrows(CouponAlreadyExistsException.class, () -> {
-            couponUseCases.createCoupon(TestObjects.coupons().COUPON_12_20());
-        });
+        Exception exception = assertThrows(CouponAlreadyExistsException.class, () -> couponUseCases.createCoupon(TestObjects.coupons().COUPON_12_20()));
         assertThat(exception.getMessage()).contains("Coupon already exists");
     }
 

@@ -36,7 +36,7 @@ public class JpaCouponProvider implements CouponProvider {
     public List<Coupon> findAll() {
         return couponJpaRepository.findAll().stream()
                 .map(this::jpaToDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override

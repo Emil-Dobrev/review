@@ -3,6 +3,7 @@ package it.schwarz.jobs.review.coupon.domain.entity;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatNullPointerException;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -35,5 +36,20 @@ class AmountOfMoneyTests {
         assertFalse(amount.isLessThan(AmountOfMoney.of("-1.23")));
         assertFalse(amount.isLessThan(AmountOfMoney.of("1.23")));
         assertTrue(amount.isLessThan(AmountOfMoney.of("1.3")));
+    }
+
+    @Test
+    void testComparisonWithNull() {
+        var amount = AmountOfMoney.of("1.23");
+        assertThatNullPointerException().isThrownBy(
+                () -> amount.isGreaterThan(null)
+        );
+    }
+
+    @Test
+    void testCreationWithNull() {
+        assertThatNullPointerException().isThrownBy(
+                () -> AmountOfMoney.of((String)null)
+        );
     }
 }

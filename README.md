@@ -7,7 +7,7 @@ This is a small and simple coupon service. Intentionally, it supports only a min
 * Maintaining coupons (Only create is implemented so far).
 * Getting an overview of existing coupons and how often they have been attempt to apply.
 * Applying of a coupon to a given basket to test if an application would be valid.
-* Getting a detailed overview of all attempts to apply a specific coupon.
+* Getting a detailed overview of all successful attempts to apply a specific coupon.
 
 
 ### Compile 

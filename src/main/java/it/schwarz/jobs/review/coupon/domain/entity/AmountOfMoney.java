@@ -3,7 +3,7 @@ package it.schwarz.jobs.review.coupon.domain.entity;
 import java.math.BigDecimal;
 
 public class AmountOfMoney {
-    public static AmountOfMoney ZERO = new AmountOfMoney(BigDecimal.ZERO);
+    public static final AmountOfMoney ZERO = new AmountOfMoney(BigDecimal.ZERO);
     private final BigDecimal amount;
 
     private AmountOfMoney(BigDecimal amount) {

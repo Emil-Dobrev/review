@@ -1,6 +1,6 @@
 package it.schwarz.jobs.review.coupon.api;
 
-public record ErrorResponseJson(
+public record ErrorResponseDto(
         String type,
         String title,
         int status,
