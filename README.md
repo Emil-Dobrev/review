@@ -12,7 +12,7 @@ This is a small and simple coupon service. Intentionally, it supports only a min
 
 ### Compile 
 
-You need JDK 17 (or later) and optionally [Apache Maven](https://maven.apache.org/) to compile and run the code.
+You need JDK 21 (or later) and optionally [Apache Maven](https://maven.apache.org/) to compile and run the code.
 
 #### Compile Option 1: with Maven Wrapper (no need to install Maven)
 `./mvnw clean package`

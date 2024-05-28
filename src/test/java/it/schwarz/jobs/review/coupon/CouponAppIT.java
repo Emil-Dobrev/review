@@ -32,7 +32,7 @@ public class CouponAppIT {
 
     @Test
     @Order(1)
-    public void testGetCouponOverview() {
+    void testGetCouponOverview() {
         GetCouponsResponseDto response = this.restTemplate
                 .getForObject(BASE_URL + port + "/api/coupons", GetCouponsResponseDto.class);
 
@@ -41,7 +41,7 @@ public class CouponAppIT {
 
     @Test
     @Order(2)
-    public void testCreateCoupon() {
+    void testCreateCoupon() {
         CreateCouponRequestDto request = TestObjects.requests().validCoupon();
         CreateCouponResponseDto response = this.restTemplate
                 .postForObject(BASE_URL + port + "/api/coupons", request, CreateCouponResponseDto.class);
@@ -58,7 +58,7 @@ public class CouponAppIT {
 
     @Test
     @Order(3)
-    public void testCreateCouponDuplicate() {
+    void testCreateCouponDuplicate() {
         CreateCouponRequestDto request = TestObjects.requests().validCoupon();
         ResponseEntity<ErrorResponseDto> response = this.restTemplate
                 .postForEntity(BASE_URL + port + "/api/coupons", request, ErrorResponseDto.class);
@@ -70,7 +70,7 @@ public class CouponAppIT {
     }
 
     @Test
-    public void testCouponApplicationWithValidData() {
+    void testCouponApplicationWithValidData() {
         ApplyCouponRequestDto request = TestObjects.requests().validApplication();
         ResponseEntity<ApplyCouponResponseDto> response = this.restTemplate
                 .postForEntity(BASE_URL + port + "/api/coupons/applications", request, ApplyCouponResponseDto.class);
@@ -81,7 +81,7 @@ public class CouponAppIT {
     }
 
     @Test
-    public void testCouponApplicationWithInvalidData() {
+    void testCouponApplicationWithInvalidData() {
         ApplyCouponRequestDto request = TestObjects.requests().invalidApplicationOfNotExistingCode();
         ResponseEntity<String> response = this.restTemplate
                 .postForEntity(BASE_URL + port + "/api/coupons/applications", request, String.class);
@@ -92,7 +92,7 @@ public class CouponAppIT {
     }
 
     @Test
-    public void testGetCouponApplicationsWithValidCoupon() {
+    void testGetCouponApplicationsWithValidCoupon() {
         ResponseEntity<GetCouponApplicationsResponseDto> response = this.restTemplate
                 .getForEntity(BASE_URL + port + "/api/coupons/TEST_05_50/applications", GetCouponApplicationsResponseDto.class);
 
@@ -103,7 +103,7 @@ public class CouponAppIT {
     }
 
     @Test
-    public void testGetCouponApplicationsWithInvalidCoupon() {
+    void testGetCouponApplicationsWithInvalidCoupon() {
         String notExistingCouponCode = TestObjects.coupons().NOT_EXISTING_COUPON().getCode();
         ResponseEntity<GetCouponApplicationsResponseDto> response = this.restTemplate
                 .getForEntity(BASE_URL + port + "/api/coupons/" + notExistingCouponCode + "/applications", GetCouponApplicationsResponseDto.class);

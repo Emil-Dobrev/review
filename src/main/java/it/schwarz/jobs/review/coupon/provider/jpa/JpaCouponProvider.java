@@ -9,14 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class JpaCouponProvider implements CouponProvider {
 
     private final CouponJpaRepository couponJpaRepository;
-    private final ApplicationRepository applicationRepository;
+    private final ApplicationJpaRepository applicationRepository;
 
-    public JpaCouponProvider(CouponJpaRepository couponJpaRepository, ApplicationRepository applicationRepository) {
+    public JpaCouponProvider(CouponJpaRepository couponJpaRepository, ApplicationJpaRepository applicationRepository) {
         this.couponJpaRepository = couponJpaRepository;
         this.applicationRepository = applicationRepository;
     }

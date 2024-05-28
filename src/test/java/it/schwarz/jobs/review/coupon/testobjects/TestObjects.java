@@ -2,8 +2,8 @@ package it.schwarz.jobs.review.coupon.testobjects;
 
 public class TestObjects {
 
-    private static TestCoupons testCoupons = new TestCoupons();
-    private static TestRequests testRequests = new TestRequests();
+    private final static TestCoupons testCoupons = new TestCoupons();
+    private final static TestRequests testRequests = new TestRequests();
 
     private TestObjects() {
     }
