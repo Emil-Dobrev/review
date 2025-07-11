@@ -12,11 +12,13 @@ public class ApplicationJpaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
+    // use Long for id
     private long id;
-
+    //Create a @ManyToOne relationship  using a CouponJpaEntity
+    // @JoinColumn(name = "COUPON_CODE", nullable = false)
     @Column(name = "COUPON_CODE", nullable = false)
     private String couponCode;
-
+    // Here we can use @CreationTimestamp. Automatically populates the timestamp on entity creation
     @Column(name = "TIMESTAMP", nullable = false)
     private Instant timestamp;
 

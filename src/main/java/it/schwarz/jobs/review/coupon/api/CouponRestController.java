@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+// here we should add versioning(/api/v1/coupons)
 @RequestMapping(path = "/api/coupons")
 public class CouponRestController {
 

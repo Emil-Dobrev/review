@@ -47,12 +47,14 @@ public class JpaCouponProvider implements CouponProvider {
 
     @Override
     public Optional<Coupon> findById(String couponCode) {
+        // Here we have to add orElseThrow CouponCodeNotFoundException
         var found = couponJpaRepository.findById(couponCode);
         return found.map(this::jpaToDomain);
     }
 
     @Override
     public Optional<CouponApplications> getCouponApplications(String couponCode) {
+        // Here we have to add orElseThrow CouponCodeNotFoundException
         var found = couponJpaRepository.findById(couponCode);
         return found.map(couponJpaEntity -> new CouponApplications(
                 couponJpaEntity.getCode(),

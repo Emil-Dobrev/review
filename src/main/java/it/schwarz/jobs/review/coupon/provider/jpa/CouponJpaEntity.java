@@ -19,7 +19,15 @@ public class CouponJpaEntity {
     private BigDecimal minBasketValue;
     @Column(name = "DESCRIPTION", nullable = false, length = 1000)
     private String description;
+    // --- CRITICAL IMPROVEMENT: @OneToMany mapping ---
+    // mappedBy should refer to the FIELD NAME in ApplicationJpaEntity that OWNS the relationship.
+    // This field should be of type CouponJpaEntity, not String.
+    // CascadeType.ALL is often used for parent-child relationships where children's lifecycle
+    // depends on the parent. OrphanRemoval ensures children are deleted if removed from the collection.
+    // @OneToMany(mappedBy = "coupon", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OneToMany(mappedBy = "couponCode")
+    // Initialize to avoid NullPointerException on getApplications().size() or iteration
+    // private List<ApplicationJpaEntity> applications = new ArrayList<>();
     private List<ApplicationJpaEntity> applications;
 
     public CouponJpaEntity() {

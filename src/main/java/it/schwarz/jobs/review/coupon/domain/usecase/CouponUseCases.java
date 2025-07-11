@@ -24,10 +24,15 @@ public class CouponUseCases {
     }
 
     public List<Coupon> findAllCoupons() {
+        //  Instead of fetching the entire application list just to get the count,
+        // it's more efficient to use a custom query that directly returns the application count using COUNT(*) in the database.
+        // pagination could be included
         return couponProvider.findAll();
     }
 
     public CouponApplications getApplications(String couponCode) {
+        //Use a custom  query to directly retrieve only the required data: couponCode and applicationTimestamps.
+        //This avoids loading full entities and improves performance.
         var foundCouponApplications = couponProvider.getCouponApplications(couponCode);
         if (foundCouponApplications.isEmpty()) {
             throw new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found.");
@@ -38,9 +43,15 @@ public class CouponUseCases {
     public ApplicationResult applyCoupon(Basket basket, String couponCode) {
 
         var basketValue = basket.getValue();
+        //We can simplify the logic for checking if a coupon exists by using orElseThrow() directly on the Optional.
+        // This improves readability and eliminates manual isEmpty() checks.
+        //     var couponToApply = couponProvider.findById(couponCode)
+        //    .orElseThrow(() -> new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found."));
         var foundCoupon = couponProvider.findById(couponCode);
 
         // No Coupon found for given Coupon Code
+        //The basket validation logic can be extracted into a separate validateBasketValue(basket, coupon) method.
+        // This improves readability, makes applyCoupon() easier to follow, and promotes reuse if similar validations are needed elsewhere.
         if (foundCoupon.isEmpty()) {
             throw new CouponCodeNotFoundException("Coupon-Code " + couponCode + " not found.");
         }

@@ -15,11 +15,13 @@ public record CouponDto(
         @NotNull
         @Min(0)
         @Max(10000)
+        //@Digits(integer = 6, fraction = 2)
         BigDecimal discount,
 
         @NotNull
         @Min(0)
         @Max(10000)
+        //@Digits(integer = 6, fraction = 2)
         BigDecimal minBasketValue,
 
         @NotNull
